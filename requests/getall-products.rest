@@ -1,0 +1,6 @@
+@HOST = http://localhost:3000
+
+
+GET {{HOST}}/products HTTP/1.1
+Content-Type: application/json
+Authorization: Basic TOKEN_CRIPTOGRAFADO

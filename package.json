@@ -1,0 +1,96 @@
+{
+  "name": "ms-produtos",
+  "version": "1.0.0",
+  "description": "Microsservico especifico para gerenciar os produtos de uma catalogo",
+  "main": "index.js",
+  "scripts": {
+    "dev": "NODE_ENV=development ts-node-dev --respawn --transpile-only src/index.ts",
+    "lint": "eslint ./src ./tests --ext .ts",
+    "lint:fix": "eslint ./src ./tests --ext .ts --fix",
+    "style": "prettier --check 'src/**/*.ts' 'tests/**/*.ts'",
+    "style:fix": "prettier --write 'src/**/*.ts' 'tests/**/*.ts'",
+    "setup:test:integration": "NODE_ENV=test npx rimraf ./testdb.sql && NODE_ENV=test npx ts-node-dev ./node_modules/typeorm/cli.js migration:run",
+    "pretest": "npm run setup:test:integration",
+    "test": "NODE_ENV=test ts-mocha --spec=tests/**/*.ts",
+    "test:integration": "NODE_ENV=test ts-mocha --spec=tests/integration/**/*.spec.ts",
+    "test:unit": "NODE_ENV=test ts-mocha --spec=tests/unit/**/*.spec.ts",
+    "precoverage": "npm run setup:test:integration",
+    "coverage": "npm run coverage:unit && npm run coverage:integration && npm run coverage:report",
+    "coverage:unit": "NODE_ENV=test nyc --silent npm run test:unit",
+    "coverage:integration": "NODE_ENV=test nyc --silent --no-clean npm run test:integration",
+    "coverage:report": "nyc report --reporter=text --reporter=html --check-coverage=true"
+  },
+  "author": "Edson Marins",
+  "license": "ISC",
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint && npm run style"
+    }
+  },
+  "mocha": {
+    "extension": [
+      "ts"
+    ],
+    "ui": "bdd"
+  },
+  "nyc": {
+    "extension": [
+      ".ts"
+    ],
+    "exclude": [
+      "coverage/",
+      "tests/",
+      "src/infra/database/migrations/",
+      "src/index.ts"
+    ],
+    "include": [
+      "src/**/*.ts"
+    ],
+    "all": true,
+    "extends": "@istanbuljs/nyc-config-typescript",
+    "branches": 80,
+    "lines": 80,
+    "functions": 80,
+    "statements": 80
+  },
+  "engines": {
+    "node": ">=12",
+    "npm": ">=6"
+  },
+  "dependencies": {
+    "@types/chai-http": "^4.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "helmet": "^4.2.0",
+    "pg": "^8.5.1",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.29",
+    "uuid": "^8.3.1"
+  },
+  "devDependencies": {
+    "@istanbuljs/nyc-config-typescript": "^1.0.1",
+    "@types/chai": "^4.2.14",
+    "@types/cors": "^2.8.8",
+    "@types/express": "^4.17.9",
+    "@types/helmet": "^4.0.0",
+    "@types/mocha": "^8.0.4",
+    "@types/node": "^14.14.10",
+    "@types/uuid": "^8.3.0",
+    "@typescript-eslint/eslint-plugin": "^4.9.0",
+    "@typescript-eslint/parser": "^4.9.0",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "eslint": "^7.14.0",
+    "husky": "^4.3.0",
+    "mocha": "^8.2.1",
+    "mocha-junit-reporter": "^2.0.0",
+    "nyc": "^15.1.0",
+    "prettier": "^2.2.1",
+    "rimraf": "^3.0.2",
+    "sqlite3": "^5.0.0",
+    "ts-mocha": "^8.0.0",
+    "ts-node-dev": "^1.0.0",
+    "typescript": "^4.0.5"
+  }
+}
