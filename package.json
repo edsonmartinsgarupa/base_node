@@ -24,7 +24,7 @@
   "license": "ISC",
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint && npm run style"
+      "pre-commit": "npm run lint:fix && npm run style:fix"
     }
   },
   "mocha": {
