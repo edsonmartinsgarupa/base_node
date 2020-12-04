@@ -30,11 +30,13 @@ export default class ProductController {
     return response.status(200).json(APIResponse.withSuccess(dataToReturn));
   }
 
-
-  public async deleteProducts(request: Request, response: Response): Promise<Response> {
-    const { category } = request.params
+  public async deleteProducts(
+    request: Request,
+    response: Response
+  ): Promise<Response> {
+    const { category } = request.params;
     const service = ProductFactory.generateService();
-    const message = await service.deleteProducts(category)
+    const message = await service.deleteProducts(category);
 
     return response.status(200).json(APIResponse.withSuccess(message));
   }

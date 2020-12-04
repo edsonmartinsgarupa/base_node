@@ -16,5 +16,5 @@ export default class ProductService implements IProductService {
   public async deleteProducts(category: string): Promise<string> {
     const productsDeleted = await this.#repository.deleteProducts(category);
     return productsDeleted ? 'products deleted' : 'products not deleted';
-  };
+  }
 }

@@ -33,7 +33,7 @@ describe('Products  - Endpoints', () => {
       assert.isFalse(response.body.success);
       assert.equal(response.body.error.message, 'TOKEN_INVALIDO');
     });
-  })
+  });
 
   describe('GET /products', () => {
     beforeEach(async () => {
@@ -81,10 +81,10 @@ describe('Products  - Endpoints', () => {
   describe('DELETE /products/:category', () => {
     beforeEach(async () => {
       await ProductEntity.clear();
-    })
+    });
 
     it('deve retornar um valor true', async () => {
-      const category = uuid()
+      const category = uuid();
 
       await ProductEntity.create({
         uid: uuid(),
@@ -118,7 +118,11 @@ describe('Products  - Endpoints', () => {
 
       const products = await ProductEntity.find();
 
-      assert.lengthOf(products, 1, 'precisa ter somente 1 product na base de dados')
-    })
-  })
+      assert.lengthOf(
+        products,
+        1,
+        'precisa ter somente 1 product na base de dados'
+      );
+    });
+  });
 });

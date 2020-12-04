@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { v4 as uuid } from 'uuid'
+import { v4 as uuid } from 'uuid';
 
 import IProductService from '../../../src/domain/context/contracts/services/IProductService';
 import ProductService from '../../../src/application/ProductService';
@@ -29,11 +29,11 @@ describe('Application > ProductService', () => {
         );
         const category = 'deleted_products';
 
-        const message = await service.deleteProducts(category)
+        const message = await service.deleteProducts(category);
 
-        assert.equal(message, 'products deleted')
-      })
-    })
+        assert.equal(message, 'products deleted');
+      });
+    });
 
     context('Quando não deleta todos os products', () => {
       it('Então deve retornar a mensagem PRODUCTS DELETED', async () => {
@@ -42,10 +42,10 @@ describe('Application > ProductService', () => {
         );
         const category = 'not_deleted_products';
 
-        const message = await service.deleteProducts(category)
+        const message = await service.deleteProducts(category);
 
-        assert.equal(message, 'products not deleted')
-      })
-    })
-  })
+        assert.equal(message, 'products not deleted');
+      });
+    });
+  });
 });

@@ -24,7 +24,7 @@ export default class Routes {
     const controller = new ProductController();
 
     productsRoutes.get('/', controller.getAll);
-    productsRoutes.delete('/:category', controller.deleteProducts)
+    productsRoutes.delete('/:category', controller.deleteProducts);
 
     return productsRoutes;
   }
