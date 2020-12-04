@@ -14,7 +14,7 @@ export class CreateTableProducts1606934025732 implements MigrationInterface {
             type: 'decimal',
             precision: 6,
             scale: 2,
-            isNullable: false,
+            isNullable: false
           },
         ],
       })

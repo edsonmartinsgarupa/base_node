@@ -1,4 +1,5 @@
 import { assert } from 'chai';
+import { v4 as uuid } from 'uuid'
 
 import IProductService from '../../../src/domain/context/contracts/services/IProductService';
 import ProductService from '../../../src/application/ProductService';
@@ -19,4 +20,32 @@ describe('Application > ProductService', () => {
       });
     });
   });
+
+  describe('Deletar todos os products de X category', () => {
+    context('Quando deleta todos os products sem erro', () => {
+      it('Então deve retornar a mensagem PRODUCTS DELETED', async () => {
+        const service: IProductService = new ProductService(
+          new ProductRepositoryMock()
+        );
+        const category = 'deleted_products';
+
+        const message = await service.deleteProducts(category)
+
+        assert.equal(message, 'products deleted')
+      })
+    })
+
+    context('Quando não deleta todos os products', () => {
+      it('Então deve retornar a mensagem PRODUCTS DELETED', async () => {
+        const service: IProductService = new ProductService(
+          new ProductRepositoryMock()
+        );
+        const category = 'not_deleted_products';
+
+        const message = await service.deleteProducts(category)
+
+        assert.equal(message, 'products not deleted')
+      })
+    })
+  })
 });

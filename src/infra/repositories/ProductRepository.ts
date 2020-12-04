@@ -1,6 +1,7 @@
 import { Connection, EntityManager } from 'typeorm';
-import ProductMapper from '../../data_mappers/ProductMapper';
+import { v4 as uuid } from 'uuid'
 
+import ProductMapper from '../../data_mappers/ProductMapper';
 import IProductRepository from '../../domain/context/contracts/repositories/IProductRepository';
 import Product from '../../domain/context/entities/Product';
 import IConnection from '../contracts/IConnection';
@@ -24,4 +25,11 @@ export default class ProductRepository implements IProductRepository {
 
     return products;
   }
+
+  public async deleteProducts(category: string): Promise<boolean> {
+    const productsToDeleted = await this.#instanceDB.remove(await this.#instanceDB.find(ProductEntity, { where: { category } }));
+    const notDeleted = productsToDeleted.some((product) => product.uid !== undefined)
+    return !notDeleted;
+  }
+
 }

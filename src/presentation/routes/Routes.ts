@@ -24,8 +24,7 @@ export default class Routes {
     const controller = new ProductController();
 
     productsRoutes.get('/', controller.getAll);
-    productsRoutes.get('/:uid', controller.getByID);
-    productsRoutes.post('/', controller.save);
+    productsRoutes.delete('/:category', controller.deleteProducts)
 
     return productsRoutes;
   }
