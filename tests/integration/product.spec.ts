@@ -1,6 +1,6 @@
 import chai, { assert } from 'chai';
 import chaiHttp from 'chai-http';
-import { v4 as uuid } from 'uuid';
+import { v4 as uuid, validate } from 'uuid';
 
 import ProductEntity from '../../src/infra/database/entities/ProductEntity';
 import App from '../../src/presentation/App';
@@ -125,4 +125,34 @@ describe('Products  - Endpoints', () => {
       );
     });
   });
+
+  describe('POST /products', () => {
+
+    it('deve retoranr status 200 e cadastrar um prduto novo', async () => {
+      const category = uuid();
+
+      const response = await chai.request(app.server)
+        .post('/products')
+        .send({ price: 21.99, category, name: 'produto teste' })
+        .set('authorization', 'Basic TOKEN_CRIPTOGRAFADO');
+
+      assert.equal(response.status, 200)
+      assert.equal(response.body.data.price, 21.99)
+      assert.equal(response.body.data.category, category)
+      assert.equal(response.body.data.name, 'produto teste')
+      assert.isTrue(validate(response.body.data.uid))
+    })
+
+    it('deve retornar um status 400 e erro de algum dado', async () => {
+      const category = uuid();
+
+      const response = await chai.request(app.server)
+        .post('/products')
+        .send({ price: 21.99, category })
+        .set('authorization', 'Basic TOKEN_CRIPTOGRAFADO');
+
+      assert.equal(response.status, 400)
+      assert.equal(response.body.error.message, 'faltou o name')
+    })
+  })
 });

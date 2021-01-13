@@ -5,6 +5,10 @@ import Product from '../../../src/domain/context/entities/Product';
 import ProductFactory from '../../../src/factories/ProductFactory';
 
 export default class ProductRepositoryMock implements IProductRepository {
+  public async saveProduct(product: Product): Promise<boolean> {
+    return product.name === 'nao_salva' ? false : true
+  }
+
   public async getAll(): Promise<Product[]> {
     return [
       ProductFactory.generateEntity(uuid(), 'Teste 1', 10.0, uuid()),

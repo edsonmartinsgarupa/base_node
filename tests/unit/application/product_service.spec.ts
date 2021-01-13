@@ -1,8 +1,9 @@
 import { assert } from 'chai';
-import { v4 as uuid } from 'uuid';
+import { v4 as uuid, validate } from 'uuid';
 
 import IProductService from '../../../src/domain/context/contracts/services/IProductService';
 import ProductService from '../../../src/application/ProductService';
+import ProductFactory from '../../../src/factories/ProductFactory';
 import ProductRepositoryMock from '../mocks/ProductRepositoryMock';
 
 describe('Application > ProductService', () => {
@@ -48,4 +49,31 @@ describe('Application > ProductService', () => {
       });
     });
   });
+
+  describe('Salvar um produto', () => {
+    it('deve salvar um produto', async () => {
+      const service: IProductService = new ProductService(new ProductRepositoryMock());
+      const category = uuid();
+      const data = ProductFactory.generateEntity(category, 'produto teste', 21.99)
+
+      const product = await service.saveProduct(data);
+
+      assert.equal(product.price, 21.99)
+      assert.equal(product.category, category)
+      assert.equal(product.name, 'produto teste')
+      assert.isTrue(validate(product.uid))
+
+    })
+
+    it('não deve salvar um produto', async () => {
+      const service: IProductService = new ProductService(new ProductRepositoryMock());
+      const category = uuid();
+      const data = ProductFactory.generateEntity(category, 'nao_salva', 21.99)
+
+      const product = await service.saveProduct(data);
+
+      assert.isNull(product)
+
+    })
+  })
 });

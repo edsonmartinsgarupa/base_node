@@ -14,6 +14,15 @@ export default class ProductRepository implements IProductRepository {
     this.#instanceDB = conexao.getConnection().manager;
   }
 
+  public async saveProduct(product: Product): Promise<boolean> {
+
+    const productDB = ProductMapper.fromDomainToRepository(product);
+
+    const productSaved = await this.#instanceDB.save(productDB);
+
+    return productSaved !== null;
+  }
+
   public async getAll(): Promise<Product[]> {
     const productEntities = await this.#instanceDB.find(ProductEntity);
 

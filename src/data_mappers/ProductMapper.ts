@@ -13,6 +13,15 @@ export default class ProductMapper {
     return product;
   }
 
+  public static fromDomainToRepository(product: Product): ProductEntity {
+    const entity = new ProductEntity()
+    entity.uid = product.uid;
+    entity.category = product.category;
+    entity.name = product.name;
+    entity.price = product.price;
+    return entity;
+  }
+
   public static fromDomainToPresentation(
     product: Product
   ): { uid: string; category: string; name: string; price: number } {

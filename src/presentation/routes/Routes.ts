@@ -25,6 +25,7 @@ export default class Routes {
 
     productsRoutes.get('/', controller.getAll);
     productsRoutes.delete('/:category', controller.deleteProducts);
+    productsRoutes.post('/', controller.saveProduct);
 
     return productsRoutes;
   }

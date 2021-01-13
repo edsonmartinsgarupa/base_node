@@ -9,12 +9,19 @@ export default class ProductService implements IProductService {
     this.#repository = repository;
   }
 
+  public async saveProduct(product: Product): Promise<Product | null> {
+    const salvou = await this.#repository.saveProduct(product)
+    return salvou ? product : null;
+  }
+
   public async getAll(): Promise<Product[]> {
     const products = await this.#repository.getAll();
     return products;
   }
+
   public async deleteProducts(category: string): Promise<string> {
     const productsDeleted = await this.#repository.deleteProducts(category);
     return productsDeleted ? 'products deleted' : 'products not deleted';
   }
+
 }
